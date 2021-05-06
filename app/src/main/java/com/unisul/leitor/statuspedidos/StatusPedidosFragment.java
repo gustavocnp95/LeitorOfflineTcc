@@ -1,4 +1,4 @@
-package com.unisul.leitor.mainmenu;
+package com.unisul.leitor.statuspedidos;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,11 +11,11 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.unisul.leitor.R;
-import com.unisul.leitor.databinding.FragmentMainMenuBinding;
+import com.unisul.leitor.databinding.FragmentStatusPedidosBinding;
 
-public class MainMenuFragment extends Fragment {
+public class StatusPedidosFragment extends Fragment {
     @Nullable
-    private FragmentMainMenuBinding mBinding;
+    private FragmentStatusPedidosBinding mBinding;
 
     @Nullable
     @Override
@@ -23,7 +23,7 @@ public class MainMenuFragment extends Fragment {
                              @Nullable final ViewGroup container,
                              @Nullable final Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_main_menu,
+                R.layout.fragment_status_pedidos,
                 container,
                 false);
         return mBinding.getRoot();
