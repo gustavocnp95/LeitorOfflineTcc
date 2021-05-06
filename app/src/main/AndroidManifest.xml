@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Leitor">
         <activity
-            android:name=".mainmenu.MainMenuActivity"
+            android:name=".statuspedidos.StatusPedidosActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.Leitor.NoActionBar">
             <intent-filter>
