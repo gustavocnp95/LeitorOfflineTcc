@@ -26,6 +26,16 @@ public class StatusPedidosFragment extends Fragment {
                 R.layout.fragment_status_pedidos,
                 container,
                 false);
+        setupSwipeToRefresh();
         return mBinding.getRoot();
+    }
+
+    private void setupSwipeToRefresh() {
+        mBinding.layoutSwipeToRefresh.setOnRefreshListener(() -> {
+            mBinding.layoutSwipeToRefresh.setRefreshing(false);
+        });
+        mBinding.layoutSwipeToRefresh.setColorSchemeResources(
+                R.color.black,
+                R.color.white);
     }
 }
