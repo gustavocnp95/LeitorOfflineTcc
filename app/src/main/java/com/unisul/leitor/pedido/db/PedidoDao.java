@@ -9,7 +9,7 @@ import java.util.List;
 
 @Dao
 public interface PedidoDao {
-    @Query("select * from pedido")
+    @Query("select * from `order`")
     List<PedidoEntity> getAllPedidos();
 
     @Insert
