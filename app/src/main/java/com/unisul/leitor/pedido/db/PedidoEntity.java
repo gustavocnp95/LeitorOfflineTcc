@@ -1,5 +1,6 @@
 package com.unisul.leitor.pedido.db;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -22,9 +23,16 @@ public class PedidoEntity {
     public PedidoEntity() {
     }
 
-    public PedidoEntity(Long id, long codPedido) {
-        this.id = id;
+    public PedidoEntity(final long codPedido,
+                        @NonNull final String tipoItens,
+                        final long quantidadeItens,
+                        @NonNull final String nomeCliente,
+                        @NonNull final String status) {
         this.codPedido = codPedido;
+        this.tipoItens = tipoItens;
+        this.quantidadeItens = quantidadeItens;
+        this.nomeCliente = nomeCliente;
+        this.status = status;
     }
 
     public PedidoEntity(long codPedido) {

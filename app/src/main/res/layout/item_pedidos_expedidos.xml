@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="item"
+            type="com.unisul.leitor.pedido.db.PedidoEntity" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,6 +21,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="@dimen/font_normal"
+            android:text="@{String.valueOf(item.codPedido)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="1234" />
@@ -24,6 +32,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="@dimen/font_normal"
+            android:text="@{String.valueOf(item.quantidadeItens)}"
             app:layout_constraintEnd_toStartOf="@id/text_statusPedido"
             app:layout_constraintStart_toEndOf="@id/text_codigoPedido"
             app:layout_constraintTop_toTopOf="parent"
@@ -36,6 +45,7 @@
             android:layout_marginEnd="15dp"
             android:gravity="center"
             android:textSize="@dimen/font_normal"
+            android:text="@{item.status}"
             app:layout_constraintEnd_toStartOf="@id/button_sync"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Pendente" />
