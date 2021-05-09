@@ -38,6 +38,7 @@ public class StatusPedidosFragment extends BaseFragment {
                 R.layout.fragment_status_pedidos,
                 container,
                 false);
+        setupSwipeToRefresh();
         setupRecyclerView();
         return mBinding.getRoot();
     }
@@ -50,6 +51,15 @@ public class StatusPedidosFragment extends BaseFragment {
         }
     }
 
+    private void setupSwipeToRefresh() {
+        mBinding.layoutSwipeToRefresh.setOnRefreshListener(this::startGetRecyclerViewItens);
+    }
+
+    private void setupRecyclerView() {
+        mBinding.recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        startGetRecyclerViewItens();
+    }
+
     private void recreateRecyclerViewItens(@NonNull final List<StatusPedidoListagem> pedidos) {
         if (pedidos.isEmpty()) {
             mBinding.textViewNenhumPedido.setVisibility(View.VISIBLE);
@@ -57,11 +67,6 @@ public class StatusPedidosFragment extends BaseFragment {
         }
         mBinding.textViewNenhumPedido.setVisibility(View.GONE);
         mBinding.recycler.setAdapter(new StatusPedidosAdapter(pedidos));
-    }
-
-    private void setupRecyclerView() {
-        mBinding.recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        startGetRecyclerViewItens();
     }
 
     private void startGetRecyclerViewItens() {
@@ -74,8 +79,13 @@ public class StatusPedidosFragment extends BaseFragment {
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnSuccess(this::recreateRecyclerViewItens)
                         .doOnSubscribe(disposable -> showProgress(mBinding.progressBar))
-                        .doFinally(() -> hideProgress(mBinding.progressBar))
+                        .doFinally(this::hideProgresses)
                         .doOnError(this::logError)
                         .subscribe());
+    }
+
+    private void hideProgresses() {
+        hideProgress(mBinding.progressBar);
+        mBinding.layoutSwipeToRefresh.setRefreshing(false);
     }
 }
