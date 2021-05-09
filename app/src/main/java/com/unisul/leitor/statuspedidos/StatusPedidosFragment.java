@@ -40,7 +40,15 @@ public class StatusPedidosFragment extends BaseFragment {
                 false);
         setupSwipeToRefresh();
         setupRecyclerView();
-        return mBinding.getRoot();
+        return getBinding().getRoot();
+    }
+
+    @NonNull
+    public FragmentStatusPedidosBinding getBinding() {
+        if (mBinding == null) {
+            throw new IllegalStateException("O binding não pode ser acessado porque ainda é nulo!");
+        }
+        return mBinding;
     }
 
     @Override
@@ -52,21 +60,21 @@ public class StatusPedidosFragment extends BaseFragment {
     }
 
     private void setupSwipeToRefresh() {
-        mBinding.layoutSwipeToRefresh.setOnRefreshListener(this::startGetRecyclerViewItens);
+        getBinding().layoutSwipeToRefresh.setOnRefreshListener(this::startGetRecyclerViewItens);
     }
 
     private void setupRecyclerView() {
-        mBinding.recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        getBinding().recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         startGetRecyclerViewItens();
     }
 
     private void recreateRecyclerViewItens(@NonNull final List<StatusPedidoListagem> pedidos) {
         if (pedidos.isEmpty()) {
-            mBinding.textViewNenhumPedido.setVisibility(View.VISIBLE);
+            getBinding().textViewNenhumPedido.setVisibility(View.VISIBLE);
             return;
         }
-        mBinding.textViewNenhumPedido.setVisibility(View.GONE);
-        mBinding.recycler.setAdapter(new StatusPedidosAdapter(pedidos));
+        getBinding().textViewNenhumPedido.setVisibility(View.GONE);
+        getBinding().recycler.setAdapter(new StatusPedidosAdapter(pedidos));
     }
 
     private void startGetRecyclerViewItens() {
@@ -85,7 +93,7 @@ public class StatusPedidosFragment extends BaseFragment {
     }
 
     private void hideProgresses() {
-        hideProgress(mBinding.progressBar);
-        mBinding.layoutSwipeToRefresh.setRefreshing(false);
+        hideProgress(getBinding().progressBar);
+        getBinding().layoutSwipeToRefresh.setRefreshing(false);
     }
 }
