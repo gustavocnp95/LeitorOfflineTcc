@@ -70,12 +70,7 @@ public class StatusPedidosFragment extends BaseFragment {
                 AppDatabase.getInstance(getContext())
                         .pedidoDao()
                         .getAllPedidos()
-                        .map(pedidoEntities -> {
-                            for (long i = 0; i < 50000; i++) {
-                                Log.d("teste", String.valueOf(i));
-                            }
-                            return PedidoMapper.toStatusPedidoListagem(pedidoEntities);
-                        })
+                        .map(PedidoMapper::toStatusPedidoListagem)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnSuccess(this::recreateRecyclerViewItens)
