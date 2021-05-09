@@ -1,5 +1,6 @@
 package com.unisul.leitor;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -13,5 +14,9 @@ public class BaseFragment extends Fragment {
 
     public void hideProgress(@NonNull final ProgressBar progressBar) {
         progressBar.setVisibility(View.GONE);
+    }
+
+    public void logError(@NonNull final Throwable throwable) {
+        Log.d("ERRO NA OPERAÇÃO!", "Um erro ocorreu.", throwable);
     }
 }
