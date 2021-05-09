@@ -9,9 +9,11 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="text_icon_button_nova_leitura_de_pedido">Nova leitura de pedido</string>
+    <string name="text_icon_button_nova_leitura_de_pedido">Nova leitura de itens</string>
     <string name="text_icon_button_verificar_pedidos">Verificar Pedidos</string>
     <string name="main_menu_title">Expedição offline</string>
     <string name="title_recycler_pedidos_expedidos">Pedidos Expedidos</string>
     <string name="empty_pedidos_message">Nenhum pedido existente</string>
+    <string name="leitura_pedido_subtitle">Pedido - %s</string>
+
 </resources>
