@@ -10,53 +10,62 @@
             type="com.unisul.leitor.statuspedidos.model.StatusPedidoListagem" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="20dp">
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp">
 
-        <TextView
-            android:id="@+id/text_codigoPedido"
-            android:layout_width="120dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@{item.codPedido}"
-            android:textSize="@dimen/font_normal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="1234" />
+            android:paddingHorizontal="20dp">
 
-        <TextView
-            android:id="@+id/text_qtdItens"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@{item.quantidadeItens}"
-            android:textSize="@dimen/font_normal"
-            app:layout_constraintEnd_toStartOf="@id/text_statusPedido"
-            app:layout_constraintStart_toEndOf="@id/text_codigoPedido"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="10" />
+            <TextView
+                android:id="@+id/text_codigoPedido"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@{item.codPedido}"
+                android:textSize="@dimen/font_normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="1234" />
 
-        <TextView
-            android:id="@+id/text_statusPedido"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:gravity="center"
-            android:text="@{item.statusPedido}"
-            android:textSize="@dimen/font_normal"
-            app:layout_constraintEnd_toStartOf="@id/button_sync"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Pendente" />
+            <TextView
+                android:id="@+id/text_qtdItens"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@{item.quantidadeItens}"
+                android:textSize="@dimen/font_normal"
+                app:layout_constraintEnd_toStartOf="@id/text_statusPedido"
+                app:layout_constraintStart_toEndOf="@id/text_codigoPedido"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="10" />
 
-        <ImageView
-            android:id="@+id/button_sync"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_sync"
-            app:layout_constraintBottom_toBottomOf="@id/text_statusPedido"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/text_statusPedido" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/text_statusPedido"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:gravity="center"
+                android:text="@{item.statusPedido}"
+                android:textSize="@dimen/font_normal"
+                app:layout_constraintEnd_toStartOf="@id/button_sync"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Pendente" />
+
+            <ImageView
+                android:id="@+id/button_sync"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_sync"
+                app:layout_constraintBottom_toBottomOf="@id/text_statusPedido"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/text_statusPedido" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </layout>
