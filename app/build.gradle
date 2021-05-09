@@ -50,4 +50,6 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.3.0'
     annotationProcessor 'androidx.room:room-compiler:2.3.0'
     implementation group: 'io.reactivex.rxjava3', name: 'rxjava', version: '3.0.12'
+    implementation "androidx.room:room-rxjava3:2.4.0-alpha02"
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
 }
