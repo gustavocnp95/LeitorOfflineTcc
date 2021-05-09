@@ -7,10 +7,12 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
+
 @Dao
 public interface PedidoDao {
     @Query("select * from `order`")
-    List<PedidoEntity> getAllPedidos();
+    Single<List<PedidoEntity>> getAllPedidos();
 
     @Insert
     void insertPedido(@NonNull final PedidoEntity pedidoEntity);

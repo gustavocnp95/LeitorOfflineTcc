@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.unisul.leitor.databinding.ItemPedidosExpedidosBinding;
-import com.unisul.leitor.pedido.db.PedidoEntity;
+import com.unisul.leitor.statuspedidos.model.StatusPedidoListagem;
 
 import java.util.List;
 
@@ -20,9 +20,9 @@ import java.util.List;
 public class StatusPedidosAdapter extends
         RecyclerView.Adapter<StatusPedidosAdapter.StatusPedidosHolder> {
     @NonNull
-    private final List<PedidoEntity> mPedidos;
+    private final List<StatusPedidoListagem> mPedidos;
 
-    public StatusPedidosAdapter(@NonNull final List<PedidoEntity> pedidos) {
+    public StatusPedidosAdapter(@NonNull final List<StatusPedidoListagem> pedidos) {
         this.mPedidos = pedidos;
     }
 
@@ -40,8 +40,8 @@ public class StatusPedidosAdapter extends
     @Override
     public void onBindViewHolder(@NonNull final StatusPedidosAdapter.StatusPedidosHolder holder,
                                  final int position) {
-        final PedidoEntity pedidoEntity = mPedidos.get(position);
-        holder.bind(pedidoEntity);
+        final StatusPedidoListagem pedido = mPedidos.get(position);
+        holder.bind(pedido);
     }
 
     @Override
@@ -59,8 +59,8 @@ public class StatusPedidosAdapter extends
             this.mBinding = binding;
         }
 
-        public void bind(@NonNull final PedidoEntity pedidoEntity) {
-            mBinding.setItem(pedidoEntity);
+        public void bind(@NonNull final StatusPedidoListagem pedido) {
+            mBinding.setItem(pedido);
             mBinding.executePendingBindings();
         }
     }
