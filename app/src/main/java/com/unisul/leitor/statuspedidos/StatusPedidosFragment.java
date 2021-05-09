@@ -1,7 +1,6 @@
 package com.unisul.leitor.statuspedidos;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,7 +75,7 @@ public class StatusPedidosFragment extends BaseFragment {
                         .doOnSuccess(this::recreateRecyclerViewItens)
                         .doOnSubscribe(disposable -> showProgress(mBinding.progressBar))
                         .doFinally(() -> hideProgress(mBinding.progressBar))
-                        .doOnError(throwable -> Log.e("Deu cagada!", "Um erro coorreu.", throwable))
+                        .doOnError(this::logError)
                         .subscribe());
     }
 }
