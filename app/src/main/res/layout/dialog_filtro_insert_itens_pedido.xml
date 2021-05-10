@@ -18,9 +18,9 @@
 
         <LinearLayout
             android:id="@+id/layout_infos"
-            android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,16 +34,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Tipo do item:"
                     tools:text="Tipo do item:" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Quantidade itens:"
                     tools:text="Quantidade itens:" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Cliente:"
                     tools:text="Cliente:" />
             </LinearLayout>
 
@@ -59,16 +62,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="ITR1234"
                     tools:text="ITR1234" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="10"
                     tools:text="10" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Ana Marcia Goulart LTDA."
                     tools:text="Ana Márcia Goulart LTDA." />
             </LinearLayout>
         </LinearLayout>
@@ -86,6 +92,7 @@
                 android:id="@+id/btn_confirmar"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:text="@string/confirmar"
                 tools:text="Confirmar" />
 
             <Space
@@ -96,6 +103,7 @@
                 android:id="@+id/btn_cancelar"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:text="@string/cancelar"
                 tools:text="Cancelar" />
 
         </LinearLayout>

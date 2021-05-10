@@ -10,6 +10,6 @@ public class BaseDialog extends DialogFragment {
     public void onStart() {
         super.onStart();
         getDialog().getWindow().setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 }

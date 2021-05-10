@@ -14,6 +14,7 @@ import com.unisul.leitor.BaseFragment;
 import com.unisul.leitor.R;
 import com.unisul.leitor.database.AppDatabase;
 import com.unisul.leitor.databinding.FragmentStatusPedidosBinding;
+import com.unisul.leitor.novaleiturapedido.FiltroPedidoDialog;
 import com.unisul.leitor.pedido.PedidoMapper;
 import com.unisul.leitor.statuspedidos.model.StatusPedidoListagem;
 
@@ -78,6 +79,8 @@ public class StatusPedidosFragment extends BaseFragment {
     }
 
     private void startGetRecyclerViewItens() {
+        FiltroPedidoDialog dialog = new FiltroPedidoDialog();
+        dialog.show(getParentFragmentManager(), "teste");
         mDisposable.add(
                 AppDatabase.getInstance(getContext())
                         .pedidoDao()
