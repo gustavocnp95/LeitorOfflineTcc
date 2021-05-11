@@ -16,4 +16,7 @@ public interface PedidoDao {
 
     @Insert
     void insertPedido(@NonNull final PedidoEntity pedidoEntity);
+
+    @Query("select * from `order` where sincronizado = :sincronizado")
+    Single<List<PedidoEntity>> getAllPedidosBySincronizado(boolean sincronizado);
 }
