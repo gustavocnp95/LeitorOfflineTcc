@@ -124,12 +124,6 @@ public class FiltroPedidoDialog extends BaseDialog {
 
     private void setupBtnConfirmar() {
         getBinding().btnConfirmar.setOnClickListener(v -> pedidoFiltroMutableLiveData.setValue(
-                new Event<>(
-                        new PedidoFiltro(
-                                1,
-                                1,
-                                1,
-                                "aa",
-                                "aa"))));
+                new Event<>((PedidoFiltro) mBinding.spinnerCodigoPedido.getSelectedItem())));
     }
 }
