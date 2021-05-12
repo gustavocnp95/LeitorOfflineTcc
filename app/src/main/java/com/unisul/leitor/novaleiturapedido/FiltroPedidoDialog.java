@@ -93,8 +93,8 @@ public class FiltroPedidoDialog extends BaseDialog {
     }
 
     private void setupSpinnerItens(@NonNull final List<PedidoFiltro> pedidos) {
-        mBinding.spinnerCodigoPedido.setOnItemSelectedListener(createOnItemSelectedListener());
-        mBinding.spinnerCodigoPedido.setAdapter(
+        getBinding().spinnerCodigoPedido.setOnItemSelectedListener(createOnItemSelectedListener());
+        getBinding().spinnerCodigoPedido.setAdapter(
                 new FiltroPedidoAdapter(
                         getContext(),
                         R.layout.support_simple_spinner_dropdown_item,
@@ -109,11 +109,11 @@ public class FiltroPedidoDialog extends BaseDialog {
                                        final int position,
                                        final long id) {
                 final PedidoFiltro pedidoSelecionado
-                        = (PedidoFiltro) mBinding.spinnerCodigoPedido.getSelectedItem();
-                mBinding.textViewTipoItens.setText(pedidoSelecionado.getTipoItens());
-                mBinding.textViewQuantidadeItens.setText(
+                        = (PedidoFiltro) getBinding().spinnerCodigoPedido.getSelectedItem();
+                getBinding().textViewTipoItens.setText(pedidoSelecionado.getTipoItens());
+                getBinding().textViewQuantidadeItens.setText(
                         String.valueOf(pedidoSelecionado.getQuantidadeItens()));
-                mBinding.textViewCliente.setText(pedidoSelecionado.getClientePedido());
+                getBinding().textViewCliente.setText(pedidoSelecionado.getClientePedido());
             }
 
             @Override
@@ -125,6 +125,7 @@ public class FiltroPedidoDialog extends BaseDialog {
     private void setupBtnConfirmar() {
         getBinding().btnConfirmar.setOnClickListener(v ->
                 pedidoFiltroMutableLiveData.setValue(
-                        new Event<>((PedidoFiltro) mBinding.spinnerCodigoPedido.getSelectedItem())));
+                        new Event<>(
+                                (PedidoFiltro) getBinding().spinnerCodigoPedido.getSelectedItem())));
     }
 }
