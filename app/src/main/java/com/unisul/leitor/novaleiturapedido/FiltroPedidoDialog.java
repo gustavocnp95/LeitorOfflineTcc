@@ -101,6 +101,7 @@ public class FiltroPedidoDialog extends BaseDialog {
                         pedidos));
     }
 
+    @NonNull
     private AdapterView.OnItemSelectedListener createOnItemSelectedListener() {
         return new AdapterView.OnItemSelectedListener() {
             @Override
