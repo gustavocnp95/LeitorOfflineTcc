@@ -60,18 +60,21 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/textView_tipoItens"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ITR1234"
                     tools:text="ITR1234" />
 
                 <TextView
+                    android:id="@+id/textView_quantidadeItens"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="10"
                     tools:text="10" />
 
                 <TextView
+                    android:id="@+id/textView_cliente"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ana Marcia Goulart LTDA."
@@ -107,5 +110,14 @@
                 tools:text="Cancelar" />
 
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
