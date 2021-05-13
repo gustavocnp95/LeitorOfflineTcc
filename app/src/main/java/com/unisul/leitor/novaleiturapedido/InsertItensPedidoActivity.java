@@ -25,4 +25,8 @@ public class InsertItensPedidoActivity extends BaseActivity {
                     R.id.fragContainer);
         }
     }
+
+    public ActivityInsertItensPedidoBinding getBinding() {
+        return mBinding;
+    }
 }

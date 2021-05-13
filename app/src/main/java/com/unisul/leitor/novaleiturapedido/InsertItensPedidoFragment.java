@@ -8,11 +8,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 
 import com.unisul.leitor.BaseFragment;
 import com.unisul.leitor.R;
+import com.unisul.leitor.common.Event;
 import com.unisul.leitor.databinding.FragmentInsertItensPedidoBinding;
-import com.unisul.leitor.databinding.FragmentStatusPedidosBinding;
+import com.unisul.leitor.novaleiturapedido.model.PedidoFiltro;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
@@ -21,6 +23,15 @@ public class InsertItensPedidoFragment extends BaseFragment {
     private FragmentInsertItensPedidoBinding mBinding;
     @NonNull
     private final CompositeDisposable mDisposable = new CompositeDisposable();
+    @NonNull
+    private final Observer<Event<PedidoFiltro>> mPedidoFiltroObserver = createPedidoFiltroObserver();
+
+    private Observer<Event<PedidoFiltro>> createPedidoFiltroObserver() {
+        return pedidoFiltroEvent ->
+                pedidoFiltroEvent
+                        .getContentIfNotHandled()
+                        .ifPresent(this::setInitialInfos);
+    }
 
     @Nullable
     @Override
@@ -32,6 +43,14 @@ public class InsertItensPedidoFragment extends BaseFragment {
                 container,
                 false);
         return getBinding().getRoot();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FiltroPedidoDialog dialog = new FiltroPedidoDialog();
+        dialog.getPedidoFiltroObservable().observe(getViewLifecycleOwner(), mPedidoFiltroObserver);
+        dialog.show(getParentFragmentManager(), dialog.getTag());
     }
 
     @NonNull
@@ -48,5 +67,15 @@ public class InsertItensPedidoFragment extends BaseFragment {
         if (!mDisposable.isDisposed()) {
             mDisposable.dispose();
         }
+    }
+
+    private void setInitialInfos(@NonNull final PedidoFiltro pedidoFiltro) {
+        getBinding().textViewCodigoPedido.setText(String.valueOf(pedidoFiltro.getCodPedido()));
+        getBinding().textViewTipoItem.setText(pedidoFiltro.getTipoItens());
+        getBinding().textViewQuantidadeItens.setText(
+                String.valueOf(pedidoFiltro.getQuantidadeItens()));
+        getBinding().textViewCliente.setText(pedidoFiltro.getClientePedido());
+        ((InsertItensPedidoActivity) getActivity()).getBinding().textViewSubtitle.setText(
+                getString(R.string.leitura_pedido_subtitle, pedidoFiltro.getCodPedido()));
     }
 }

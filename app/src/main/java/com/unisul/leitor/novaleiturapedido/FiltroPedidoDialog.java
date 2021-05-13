@@ -1,3 +1,4 @@
+
 package com.unisul.leitor.novaleiturapedido;
 
 import android.os.Bundle;
@@ -124,9 +125,11 @@ public class FiltroPedidoDialog extends BaseDialog {
     }
 
     private void setupBtnConfirmar() {
-        getBinding().btnConfirmar.setOnClickListener(v ->
-                pedidoFiltroMutableLiveData.setValue(
-                        new Event<>(
-                                (PedidoFiltro) getBinding().spinnerCodigoPedido.getSelectedItem())));
+        getBinding().btnConfirmar.setOnClickListener(v -> {
+            pedidoFiltroMutableLiveData.setValue(
+                    new Event<>(
+                            (PedidoFiltro) getBinding().spinnerCodigoPedido.getSelectedItem()));
+            dismiss();
+        });
     }
 }

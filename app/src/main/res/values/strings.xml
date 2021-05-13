@@ -14,7 +14,7 @@
     <string name="main_menu_title">Expedição offline</string>
     <string name="title_recycler_pedidos_expedidos">Pedidos Expedidos</string>
     <string name="empty_pedidos_message">Nenhum pedido existente</string>
-    <string name="leitura_pedido_subtitle">Pedido - %s</string>
+    <string name="leitura_pedido_subtitle">Pedido - %d</string>
     <string name="confirmar">Confirmar</string>
     <string name="cancelar">Cancelar</string>
 

@@ -30,6 +30,7 @@
                 android:layout_marginTop="5dp"
                 android:background="@android:color/transparent"
                 android:hint="Código do pedido"
+
                 app:boxBackgroundColor="@android:color/transparent">
 
                 <com.google.android.material.textfield.TextInputEditText
