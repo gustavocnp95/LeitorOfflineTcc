@@ -1,5 +1,6 @@
 package com.unisul.leitor.statuspedidos;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,7 @@ import com.unisul.leitor.BaseFragment;
 import com.unisul.leitor.R;
 import com.unisul.leitor.database.AppDatabase;
 import com.unisul.leitor.databinding.FragmentStatusPedidosBinding;
-import com.unisul.leitor.novaleiturapedido.FiltroPedidoDialog;
+import com.unisul.leitor.novaleiturapedido.InsertItensPedidoActivity;
 import com.unisul.leitor.pedido.PedidoMapper;
 import com.unisul.leitor.statuspedidos.model.StatusPedidoListagem;
 
@@ -41,6 +42,7 @@ public class StatusPedidosFragment extends BaseFragment {
                 false);
         setupSwipeToRefresh();
         setupRecyclerView();
+        setupBtnNovaLeitura();
         return getBinding().getRoot();
     }
 
@@ -79,8 +81,6 @@ public class StatusPedidosFragment extends BaseFragment {
     }
 
     private void startGetRecyclerViewItens() {
-        FiltroPedidoDialog dialog = new FiltroPedidoDialog();
-        dialog.show(getParentFragmentManager(), "teste");
         mDisposable.add(
                 AppDatabase.getInstance(getContext())
                         .pedidoDao()
@@ -98,5 +98,13 @@ public class StatusPedidosFragment extends BaseFragment {
     private void hideProgresses() {
         hideProgress(getBinding().progressBar);
         getBinding().layoutSwipeToRefresh.setRefreshing(false);
+    }
+
+    private void setupBtnNovaLeitura() {
+        getBinding().btnNovoPedido.setOnClickListener(v -> startActivityNovaLeituraPedido());
+    }
+
+    private void startActivityNovaLeituraPedido() {
+        startActivity(new Intent(getActivity(), InsertItensPedidoActivity.class));
     }
 }
