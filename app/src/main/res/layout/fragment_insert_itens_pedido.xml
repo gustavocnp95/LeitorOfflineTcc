@@ -7,6 +7,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/layout_infos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
@@ -18,10 +19,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="@dimen/font_normal"
                 android:layout_marginTop="10dp"
-                android:text="Informações do pedido"/>
+                android:gravity="center"
+                android:text="Informações do pedido"
+                android:textSize="@dimen/font_normal" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textFieldLayout_codigoPedido"
@@ -105,6 +106,50 @@
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
+
+        <View
+            android:id="@+id/view_divisor"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_infos" />
+
+        <TextView
+            android:id="@+id/textView_labelItensPedido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Itens do pedido"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_divisor" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldLayout_novoCodigoBarras"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/transparent"
+            android:hint="Novo código de barras"
+            app:boxBackgroundColor="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView_labelItensPedido">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textView_novoCodigoBarras"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:cursorVisible="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
