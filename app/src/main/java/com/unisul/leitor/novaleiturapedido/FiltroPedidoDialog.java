@@ -82,7 +82,7 @@ public class FiltroPedidoDialog extends BaseDialog {
         mDisposable.add(
                 AppDatabase.getInstance(getContext())
                         .pedidoDao()
-                        .getAllPedidosBySincronizado(false)
+                        .getAllPedidosBySincronizado(false, "Pendente")
                         .map(PedidoMapper::toPedidoFiltro)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
