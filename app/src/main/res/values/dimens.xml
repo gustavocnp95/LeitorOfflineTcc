@@ -2,4 +2,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="font_normal">22sp</dimen>
     <dimen name="font_small">18sp</dimen>
+    <dimen name="font_smaller">14sp</dimen>
 </resources>

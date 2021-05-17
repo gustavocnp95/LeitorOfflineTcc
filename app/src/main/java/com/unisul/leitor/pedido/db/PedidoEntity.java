@@ -19,6 +19,8 @@ public class PedidoEntity {
     private String nomeCliente;
     @ColumnInfo(name = "status")
     private String status;
+    @ColumnInfo(name = "sincronizado")
+    private boolean sincronizado;
 
     public PedidoEntity() {
     }
@@ -27,12 +29,14 @@ public class PedidoEntity {
                         @NonNull final String tipoItens,
                         final long quantidadeItens,
                         @NonNull final String nomeCliente,
-                        @NonNull final String status) {
+                        @NonNull final String status,
+                        final boolean sincronizado) {
         this.codPedido = codPedido;
         this.tipoItens = tipoItens;
         this.quantidadeItens = quantidadeItens;
         this.nomeCliente = nomeCliente;
         this.status = status;
+        this.sincronizado = sincronizado;
     }
 
     public PedidoEntity(long codPedido) {
@@ -85,5 +89,13 @@ public class PedidoEntity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public boolean isSincronizado() {
+        return sincronizado;
+    }
+
+    public void setSincronizado(boolean sincronizado) {
+        this.sincronizado = sincronizado;
     }
 }

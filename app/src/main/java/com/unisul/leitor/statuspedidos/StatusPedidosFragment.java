@@ -1,5 +1,6 @@
 package com.unisul.leitor.statuspedidos;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,9 @@ import com.unisul.leitor.BaseFragment;
 import com.unisul.leitor.R;
 import com.unisul.leitor.database.AppDatabase;
 import com.unisul.leitor.databinding.FragmentStatusPedidosBinding;
+import com.unisul.leitor.novaleiturapedido.InsertItensPedidoActivity;
 import com.unisul.leitor.pedido.PedidoMapper;
+import com.unisul.leitor.pedido.db.PedidoEntity;
 import com.unisul.leitor.statuspedidos.model.StatusPedidoListagem;
 
 import java.util.List;
@@ -40,15 +43,15 @@ public class StatusPedidosFragment extends BaseFragment {
                 false);
         setupSwipeToRefresh();
         setupRecyclerView();
+        setupBtnNovaLeitura();
         return getBinding().getRoot();
     }
 
-    @NonNull
-    public FragmentStatusPedidosBinding getBinding() {
-        if (mBinding == null) {
-            throw new IllegalStateException("O binding não pode ser acessado porque ainda é nulo!");
-        }
-        return mBinding;
+    @Override
+    public void onResume() {
+        super.onResume();
+        startGetRecyclerViewItens();
+
     }
 
     @Override
@@ -59,13 +62,20 @@ public class StatusPedidosFragment extends BaseFragment {
         }
     }
 
+    @NonNull
+    public FragmentStatusPedidosBinding getBinding() {
+        if (mBinding == null) {
+            throw new IllegalStateException("O binding não pode ser acessado porque ainda é nulo!");
+        }
+        return mBinding;
+    }
+
     private void setupSwipeToRefresh() {
         getBinding().layoutSwipeToRefresh.setOnRefreshListener(this::startGetRecyclerViewItens);
     }
 
     private void setupRecyclerView() {
         getBinding().recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        startGetRecyclerViewItens();
     }
 
     private void recreateRecyclerViewItens(@NonNull final List<StatusPedidoListagem> pedidos) {
@@ -95,5 +105,13 @@ public class StatusPedidosFragment extends BaseFragment {
     private void hideProgresses() {
         hideProgress(getBinding().progressBar);
         getBinding().layoutSwipeToRefresh.setRefreshing(false);
+    }
+
+    private void setupBtnNovaLeitura() {
+        getBinding().btnNovoPedido.setOnClickListener(v -> startActivityNovaLeituraPedido());
+    }
+
+    private void startActivityNovaLeituraPedido() {
+        startActivity(new Intent(getActivity(), InsertItensPedidoActivity.class));
     }
 }
