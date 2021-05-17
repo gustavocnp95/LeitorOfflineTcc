@@ -38,6 +38,10 @@ public class InsertItensPedidoFragment extends BaseFragment {
     @NonNull
     private final Observer<Event<PedidoFiltro>> mPedidoFiltroObserver
             = createPedidoFiltroObserver();
+    @NonNull
+    private final Observer<Event<Boolean>> mDialogFiltroCanceladoObserver
+            = createDialogFiltroCanceladoObserver();
+
     @Nullable
     private PedidoFiltro pedidoSelecionado;
 
@@ -46,6 +50,18 @@ public class InsertItensPedidoFragment extends BaseFragment {
                 pedidoFiltroEvent
                         .getContentIfNotHandled()
                         .ifPresent(this::setInitialInfos);
+    }
+
+    private Observer<Event<Boolean>> createDialogFiltroCanceladoObserver() {
+        return dialogCanceladoEvent -> {
+            dialogCanceladoEvent.getContentIfNotHandled().ifPresent(wasCanceled -> {
+                if (wasCanceled) {
+                    if (getActivity() != null) {
+                        getActivity().finish();
+                    }
+                }
+            });
+        };
     }
 
     @Nullable

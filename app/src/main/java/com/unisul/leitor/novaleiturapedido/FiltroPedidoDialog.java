@@ -1,6 +1,7 @@
 
 package com.unisul.leitor.novaleiturapedido;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -34,6 +35,9 @@ public class FiltroPedidoDialog extends BaseDialog {
     private final MutableLiveData<Event<PedidoFiltro>> pedidoFiltroMutableLiveData
             = new MutableLiveData<>();
     @NonNull
+    private final MutableLiveData<Event<Boolean>> dialogCanceladoMutableLiveData
+            = new MutableLiveData<>();
+    @NonNull
     private final CompositeDisposable mDisposable = new CompositeDisposable();
     @Nullable
     private DialogFiltroInsertItensPedidoBinding mBinding;
@@ -46,8 +50,15 @@ public class FiltroPedidoDialog extends BaseDialog {
         mBinding = DialogFiltroInsertItensPedidoBinding.inflate(
                 inflater, container, false);
         setupBtnConfirmar();
+        setupBtnCancelar();
         startGetPedidos();
         return mBinding.getRoot();
+    }
+
+    @Override
+    public void onCancel(@NonNull DialogInterface dialog) {
+        super.onCancel(dialog);
+        dialogCanceladoMutableLiveData.setValue(new Event<>(true));
     }
 
     @Override
@@ -129,6 +140,13 @@ public class FiltroPedidoDialog extends BaseDialog {
             pedidoFiltroMutableLiveData.setValue(
                     new Event<>(
                             (PedidoFiltro) getBinding().spinnerCodigoPedido.getSelectedItem()));
+            dismiss();
+        });
+    }
+
+    private void setupBtnCancelar() {
+        getBinding().btnCancelar.setOnClickListener(v -> {
+            dialogCanceladoMutableLiveData.setValue(new Event<>(true));
             dismiss();
         });
     }
