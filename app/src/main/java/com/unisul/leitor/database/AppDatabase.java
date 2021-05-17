@@ -9,8 +9,10 @@ import androidx.room.RoomDatabase;
 
 import com.unisul.leitor.pedido.db.PedidoDao;
 import com.unisul.leitor.pedido.db.PedidoEntity;
+import com.unisul.leitor.pedido.itempedido.db.ItemPedidoDao;
+import com.unisul.leitor.pedido.itempedido.db.ItemPedidoEntity;
 
-@Database(entities = {PedidoEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {PedidoEntity.class, ItemPedidoEntity.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     private static final String TAG = AppDatabase.class.getSimpleName();
     private static final Object LOCK = new Object();
@@ -32,4 +34,6 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     public abstract PedidoDao pedidoDao();
+
+    public abstract ItemPedidoDao itemPedidoDao();
 }
