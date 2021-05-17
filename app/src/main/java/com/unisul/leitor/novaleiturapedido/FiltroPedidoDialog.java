@@ -32,10 +32,10 @@ public class FiltroPedidoDialog extends BaseDialog {
     @NonNull
     private final static String TAG = FiltroPedidoDialog.class.getSimpleName();
     @NonNull
-    private final MutableLiveData<Event<PedidoFiltro>> pedidoFiltroMutableLiveData
+    private final MutableLiveData<Event<PedidoFiltro>> mPedidoFiltroMutableLiveData
             = new MutableLiveData<>();
     @NonNull
-    private final MutableLiveData<Event<Boolean>> dialogCanceladoMutableLiveData
+    private final MutableLiveData<Event<Boolean>> mDialogCanceladoMutableLiveData
             = new MutableLiveData<>();
     @NonNull
     private final CompositeDisposable mDisposable = new CompositeDisposable();
@@ -56,9 +56,9 @@ public class FiltroPedidoDialog extends BaseDialog {
     }
 
     @Override
-    public void onCancel(@NonNull DialogInterface dialog) {
+    public void onCancel(@NonNull final DialogInterface dialog) {
         super.onCancel(dialog);
-        dialogCanceladoMutableLiveData.setValue(new Event<>(true));
+        mDialogCanceladoMutableLiveData.setValue(new Event<>(true));
     }
 
     @Override
@@ -78,7 +78,12 @@ public class FiltroPedidoDialog extends BaseDialog {
 
     @NonNull
     public LiveData<Event<PedidoFiltro>> getPedidoFiltroObservable() {
-        return pedidoFiltroMutableLiveData;
+        return mPedidoFiltroMutableLiveData;
+    }
+
+    @NonNull
+    public LiveData<Event<Boolean>> getDialogCanceladoMutableLiveData() {
+        return mDialogCanceladoMutableLiveData;
     }
 
     @NonNull
@@ -111,6 +116,7 @@ public class FiltroPedidoDialog extends BaseDialog {
                         getContext(),
                         R.layout.support_simple_spinner_dropdown_item,
                         pedidos));
+        getBinding().btnConfirmar.setEnabled(!pedidos.isEmpty());
     }
 
     @NonNull
@@ -137,7 +143,7 @@ public class FiltroPedidoDialog extends BaseDialog {
 
     private void setupBtnConfirmar() {
         getBinding().btnConfirmar.setOnClickListener(v -> {
-            pedidoFiltroMutableLiveData.setValue(
+            mPedidoFiltroMutableLiveData.setValue(
                     new Event<>(
                             (PedidoFiltro) getBinding().spinnerCodigoPedido.getSelectedItem()));
             dismiss();
@@ -146,7 +152,7 @@ public class FiltroPedidoDialog extends BaseDialog {
 
     private void setupBtnCancelar() {
         getBinding().btnCancelar.setOnClickListener(v -> {
-            dialogCanceladoMutableLiveData.setValue(new Event<>(true));
+            mDialogCanceladoMutableLiveData.setValue(new Event<>(true));
             dismiss();
         });
     }

@@ -84,6 +84,8 @@ public class InsertItensPedidoFragment extends BaseFragment {
         super.onStart();
         FiltroPedidoDialog dialog = new FiltroPedidoDialog();
         dialog.getPedidoFiltroObservable().observe(getViewLifecycleOwner(), mPedidoFiltroObserver);
+        dialog.getDialogCanceladoMutableLiveData().observe(
+                getViewLifecycleOwner(), mDialogFiltroCanceladoObserver);
         dialog.show(getParentFragmentManager(), dialog.getTag());
     }
 
