@@ -10,15 +10,18 @@ public class StatusPedidoListagem {
     private final String quantidadeItens;
     @NonNull
     private final String statusPedido;
+    private boolean sincronizado;
 
     public StatusPedidoListagem(final long idPedido,
                                 @NonNull final String codPedido,
                                 @NonNull final String quantidadeItens,
-                                @NonNull final String statusPedido) {
+                                @NonNull final String statusPedido,
+                                final boolean sincronizado) {
         this.idPedido = idPedido;
         this.codPedido = codPedido;
         this.quantidadeItens = quantidadeItens;
         this.statusPedido = statusPedido;
+        this.sincronizado = sincronizado;
     }
 
     public long getIdPedido() {
@@ -38,5 +41,14 @@ public class StatusPedidoListagem {
     @NonNull
     public String getStatusPedido() {
         return statusPedido;
+    }
+
+    @NonNull
+    public Boolean getSincronizado() {
+        return sincronizado;
+    }
+
+    public void setSincronizado(@NonNull Boolean sincronizado) {
+        this.sincronizado = sincronizado;
     }
 }
