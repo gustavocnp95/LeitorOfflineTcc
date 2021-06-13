@@ -27,13 +27,19 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recycler_title">
+            app:layout_constraintTop_toBottomOf="@id/recycler_title"
+            tools:ignore="MissingClass">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                tools:listitem="@layout/item_pedidos_expedidos" />
+                android:layout_height="0dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    tools:listitem="@layout/item_pedidos_expedidos" />
+            </ScrollView>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
