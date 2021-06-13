@@ -23,4 +23,7 @@ public interface PedidoDao {
 
     @Query("update 'order' set status = 'Preenchido' where id = :idPedido")
     Completable setPedidoLido(final long idPedido);
+
+    @Query("update 'order' set sincronizado = 1 where id = :idPedido")
+    Completable setPedidoSincronizado(final long idPedido);
 }
