@@ -23,7 +23,8 @@ public final class PedidoMapper {
                 pedidoEntity.getId(),
                 String.valueOf(pedidoEntity.getCodPedido()),
                 String.valueOf(pedidoEntity.getQuantidadeItens()),
-                String.valueOf(pedidoEntity.getStatus()));
+                String.valueOf(pedidoEntity.getStatus()),
+                pedidoEntity.isSincronizado());
     }
 
     public static List<PedidoFiltro> toPedidoFiltro(

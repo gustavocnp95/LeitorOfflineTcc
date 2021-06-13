@@ -13,8 +13,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="20dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp">
 
@@ -62,10 +62,13 @@
                 android:id="@+id/button_sync"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ic_sync"
+                android:src="@{item.sincronizado ? @drawable/ic_save : @drawable/ic_sync}"
                 app:layout_constraintBottom_toBottomOf="@id/text_statusPedido"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/text_statusPedido" />
+                app:layout_constraintTop_toTopOf="@id/text_statusPedido"
+                app:tint="@{item.sincronizado ? @color/soft_green : @color/gray}"
+                tools:src="@drawable/ic_sync"
+                tools:tint="@color/soft_green" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>
