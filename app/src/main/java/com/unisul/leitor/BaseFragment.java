@@ -17,6 +17,6 @@ public class BaseFragment extends Fragment {
     }
 
     public void logError(@NonNull final Throwable throwable) {
-        Log.d("ERRO NA OPERAÇÃO!", "Um erro ocorreu.", throwable);
+        Log.e("ERRO NA OPERAÇÃO!", "Um erro ocorreu.", throwable);
     }
 }
