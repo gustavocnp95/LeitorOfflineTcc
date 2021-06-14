@@ -16,7 +16,7 @@ public interface PedidoDao {
     Single<List<PedidoEntity>> getAllPedidos();
 
     @Insert
-    void insertPedido(@NonNull final PedidoEntity pedidoEntity);
+    Completable insertPedidos(@NonNull final List<PedidoEntity> pedidosEntity);
 
     @Query("select * from `order` where sincronizado = :sincronizado and status = :status")
     Single<List<PedidoEntity>> getAllPedidosBySincronizado(boolean sincronizado, String status);
@@ -26,4 +26,7 @@ public interface PedidoDao {
 
     @Query("update 'order' set sincronizado = 1 where id = :idPedido")
     Completable setPedidoSincronizado(final long idPedido);
+
+    @Query("delete from 'order' where status = 'Pendente'")
+    Completable deletePendentes();
 }

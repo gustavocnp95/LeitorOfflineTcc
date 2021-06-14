@@ -4,12 +4,28 @@ import androidx.annotation.NonNull;
 
 import com.unisul.leitor.novaleiturapedido.model.PedidoFiltro;
 import com.unisul.leitor.pedido.db.PedidoEntity;
+import com.unisul.leitor.pedido.model.PedidoListagem;
 import com.unisul.leitor.statuspedidos.model.StatusPedidoListagem;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public final class PedidoMapper {
+
+    public static List<PedidoEntity> toPedidoEntity(@NonNull final List<PedidoListagem> pedidos) {
+        return pedidos.stream().map(PedidoMapper::toPedidoEntity).collect(Collectors.toList());
+    }
+
+    public static PedidoEntity toPedidoEntity(@NonNull final PedidoListagem pedido) {
+        return new PedidoEntity(
+                pedido.getCodigoPedido(),
+                pedido.getTipoItens(),
+                pedido.getQuantidadeItens(),
+                pedido.getNomeCliente(),
+                pedido.getStatus(),
+                false);
+    }
+
     public static List<StatusPedidoListagem> toStatusPedidoListagem(
             @NonNull final List<PedidoEntity> pedidosEntity) {
         return pedidosEntity.stream()
