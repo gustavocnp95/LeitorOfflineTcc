@@ -17,7 +17,8 @@ import com.unisul.leitor.database.AppDatabase;
 import com.unisul.leitor.databinding.FragmentStatusPedidosBinding;
 import com.unisul.leitor.novaleiturapedido.InsertItensPedidoActivity;
 import com.unisul.leitor.pedido.PedidoMapper;
-import com.unisul.leitor.pedido.db.PedidoEntity;
+import com.unisul.leitor.pedido.PedidoRepositorio;
+import com.unisul.leitor.pedido.model.PedidoListagem;
 import com.unisul.leitor.statuspedidos.model.StatusPedidoListagem;
 
 import java.util.List;
@@ -31,6 +32,8 @@ public class StatusPedidosFragment extends BaseFragment {
     private FragmentStatusPedidosBinding mBinding;
     @NonNull
     private final CompositeDisposable mDisposable = new CompositeDisposable();
+    @NonNull
+    private final PedidoRepositorio repositorio = new PedidoRepositorio();
 
     @Nullable
     @Override
@@ -88,18 +91,18 @@ public class StatusPedidosFragment extends BaseFragment {
     }
 
     private void startGetRecyclerViewItens() {
-        mDisposable.add(
-                AppDatabase.getInstance(getContext())
-                        .pedidoDao()
-                        .getAllPedidos()
-                        .map(PedidoMapper::toStatusPedidoListagem)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnSuccess(this::recreateRecyclerViewItens)
-                        .doOnSubscribe(disposable -> showProgress(mBinding.progressBar))
-                        .doFinally(this::hideProgresses)
-                        .doOnError(this::logError)
-                        .subscribe());
+        if (getContext() != null) {
+            mDisposable.add(
+                    AppDatabase.getInstance(getContext())
+                            .pedidoDao()
+                            .deletePendentes()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .doOnSubscribe(disposable -> showProgress(getBinding().progressBar))
+                            .subscribe(this::onSuccessDeletePedidosPendentes, this::onError)
+            );
+        }
+
     }
 
     private void hideProgresses() {
@@ -113,5 +116,45 @@ public class StatusPedidosFragment extends BaseFragment {
 
     private void startActivityNovaLeituraPedido() {
         startActivity(new Intent(getActivity(), InsertItensPedidoActivity.class));
+    }
+
+    private void onSuccessDeletePedidosPendentes() {
+        if (getContext() != null) {
+            mDisposable.add(
+                    repositorio
+                            .syncPedidosPendentes(getContext())
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(this::onSuccessSyncPedidosPendentes, this::onError)
+            );
+        }
+    }
+
+    private void onSuccessSyncPedidosPendentes(@NonNull final List<PedidoListagem> pedidos) {
+        mDisposable.add(
+                AppDatabase.getInstance(getContext())
+                        .pedidoDao()
+                        .insertPedidos(PedidoMapper.toPedidoEntity(pedidos))
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(this::onSuccessInsertPedidos, this::onError));
+
+    }
+
+    private void onSuccessInsertPedidos() {
+        mDisposable.add(
+                AppDatabase.getInstance(getContext())
+                        .pedidoDao()
+                        .getAllPedidos()
+                        .map(PedidoMapper::toStatusPedidoListagem)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doFinally(this::hideProgresses)
+                        .subscribe(this::recreateRecyclerViewItens, this::onError));
+    }
+
+    private void onError(@NonNull final Throwable throwable) {
+        hideProgresses();
+        logError(throwable);
     }
 }

@@ -1,8 +1,12 @@
 package com.unisul.leitor.statuspedidos.model;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
 
-public class StatusPedidoListagem {
+import com.unisul.leitor.BR;
+
+public class StatusPedidoListagem extends BaseObservable {
     private final long idPedido;
     @NonNull
     private final String codPedido;
@@ -43,6 +47,7 @@ public class StatusPedidoListagem {
         return statusPedido;
     }
 
+    @Bindable
     @NonNull
     public Boolean getSincronizado() {
         return sincronizado;
@@ -50,5 +55,10 @@ public class StatusPedidoListagem {
 
     public void setSincronizado(@NonNull Boolean sincronizado) {
         this.sincronizado = sincronizado;
+        notifyPropertyChanged(BR.sincronizado);
+    }
+
+    public boolean isPreenchido() {
+        return this.statusPedido.equals("Preenchido");
     }
 }

@@ -78,26 +78,25 @@ public class StatusPedidosAdapter extends
                 @NonNull final ItemPedidosExpedidosBinding binding) {
             super(binding.getRoot());
             this.mBinding = binding;
+            setupBtnSincronizar();
         }
 
         public void bind(@NonNull final StatusPedidoListagem pedido) {
             mBinding.setItem(pedido);
             mBinding.executePendingBindings();
-            setupBtnSincronizar();
         }
 
         private void setupBtnSincronizar() {
             mBinding.buttonSync.setOnClickListener(v -> {
-                if (!mBinding.getItem().getSincronizado()) {
+                if (!mBinding.getItem().getSincronizado()
+                        && mBinding.getItem().isPreenchido()) {
                     mDisposable.add(
                             mRepositorio.enviarPedido(v.getContext(), mBinding.getItem().getIdPedido())
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .doOnSubscribe(disposable ->
                                             AnimationUtils.rotateUntilCleared(mBinding.buttonSync))
-                                    .doOnComplete(() -> {
-                                        setPedidoSincronizado(v.getContext());
-                                    })
+                                    .doOnComplete(() -> setPedidoSincronizado(v.getContext()))
                                     .doFinally(mBinding.buttonSync::clearAnimation)
                                     .subscribe(() -> {
                                     }, this::onError));
