@@ -15,6 +15,9 @@ public interface PedidoDao {
     @Query("select * from `order`")
     Single<List<PedidoEntity>> getAllPedidos();
 
+    @Query("select * from `order` where status = 'Preenchido' and sincronizado = 0")
+    Single<List<PedidoEntity>> getAllPedidosPreenchidosAndNotSync();
+
     @Insert
     Completable insertPedidos(@NonNull final List<PedidoEntity> pedidosEntity);
 
