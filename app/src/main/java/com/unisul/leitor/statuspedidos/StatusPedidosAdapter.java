@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.unisul.leitor.common.animation.AnimationUtils;
 import com.unisul.leitor.database.AppDatabase;
 import com.unisul.leitor.databinding.ItemPedidosExpedidosBinding;
+import com.unisul.leitor.pedido.PedidoMapper;
 import com.unisul.leitor.pedido.PedidoRepositorio;
+import com.unisul.leitor.pedido.itempedido.db.ItemPedidoEntity;
 import com.unisul.leitor.statuspedidos.model.StatusPedidoListagem;
 
 import java.util.List;
@@ -91,17 +93,35 @@ public class StatusPedidosAdapter extends
                 if (!mBinding.getItem().getSincronizado()
                         && mBinding.getItem().isPreenchido()) {
                     mDisposable.add(
-                            mRepositorio.enviarPedido(v.getContext(), mBinding.getItem().getIdPedido())
+                            AppDatabase.getInstance(v.getContext())
+                                    .itemPedidoDao()
+                                    .getItensPedido(mBinding.getItem().getIdPedido())
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .doOnSubscribe(disposable ->
                                             AnimationUtils.rotateUntilCleared(mBinding.buttonSync))
-                                    .doOnComplete(() -> setPedidoSincronizado(v.getContext()))
-                                    .doFinally(mBinding.buttonSync::clearAnimation)
-                                    .subscribe(() -> {
-                                    }, this::onError));
+                                    .subscribe(
+                                            itensPedidoEntity
+                                                    -> enviarPedido(
+                                                    v.getContext(),
+                                                    itensPedidoEntity,
+                                                    Long.parseLong(mBinding.getItem().getCodPedido())),
+                                            this::onError));
                 }
             });
+        }
+
+        private void enviarPedido(@NonNull final Context context,
+                                  @NonNull final List<ItemPedidoEntity> itensPedido,
+                                  final long codPedido) {
+            mDisposable.add(
+                    mRepositorio.enviarPedido(context, PedidoMapper.toPedidoLeitura(codPedido, itensPedido))
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+
+                            .doOnComplete(() -> setPedidoSincronizado(context))
+                            .subscribe(() -> {
+                            }, this::onError));
         }
 
         private void setPedidoSincronizado(@NonNull final Context context) {
@@ -126,6 +146,7 @@ public class StatusPedidosAdapter extends
 
         private void onError(@NonNull final Throwable throwable) {
             Toast.makeText(mBinding.buttonSync.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            mBinding.buttonSync.clearAnimation();
         }
     }
 }

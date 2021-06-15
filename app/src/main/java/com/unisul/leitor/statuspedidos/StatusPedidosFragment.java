@@ -13,15 +13,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.unisul.leitor.BaseFragment;
 import com.unisul.leitor.R;
+import com.unisul.leitor.common.AndroidUtils;
 import com.unisul.leitor.database.AppDatabase;
 import com.unisul.leitor.databinding.FragmentStatusPedidosBinding;
 import com.unisul.leitor.novaleiturapedido.InsertItensPedidoActivity;
 import com.unisul.leitor.pedido.PedidoMapper;
 import com.unisul.leitor.pedido.PedidoRepositorio;
+import com.unisul.leitor.pedido.db.PedidoEntity;
 import com.unisul.leitor.pedido.model.PedidoListagem;
 import com.unisul.leitor.statuspedidos.model.StatusPedidoListagem;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -91,18 +94,21 @@ public class StatusPedidosFragment extends BaseFragment {
     }
 
     private void startGetRecyclerViewItens() {
-        if (getContext() != null) {
-            mDisposable.add(
-                    AppDatabase.getInstance(getContext())
-                            .pedidoDao()
-                            .deletePendentes()
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .doOnSubscribe(disposable -> showProgress(getBinding().progressBar))
-                            .subscribe(this::onSuccessDeletePedidosPendentes, this::onError)
-            );
+        if (AndroidUtils.isNetworkAvailable(getContext())) {
+            if (getContext() != null) {
+                mDisposable.add(
+                        AppDatabase.getInstance(getContext())
+                                .pedidoDao()
+                                .deletePendentes()
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .doOnSubscribe(disposable -> showProgress(getBinding().progressBar))
+                                .subscribe(this::onSuccessDeletePedidosPendentes, this::onError)
+                );
+            }
+        } else {
+            getAllPedidosLocal();
         }
-
     }
 
     private void hideProgresses() {
@@ -134,14 +140,38 @@ public class StatusPedidosFragment extends BaseFragment {
         mDisposable.add(
                 AppDatabase.getInstance(getContext())
                         .pedidoDao()
-                        .insertPedidos(PedidoMapper.toPedidoEntity(pedidos))
+                        .getAllPedidosPreenchidosAndNotSync()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(this::onSuccessInsertPedidos, this::onError));
+                        .subscribe(
+                                pedidoEntities -> onSuccessGetAllPedidosPreenchidosAndNotSync(pedidos, pedidoEntities),
+                                this::onError));
+
 
     }
 
+    private void onSuccessGetAllPedidosPreenchidosAndNotSync(@NonNull final List<PedidoListagem> pedidosRecebidos,
+                                                             @NonNull final List<PedidoEntity> pedidosExistentes) {
+        mDisposable.add(
+                AppDatabase.getInstance(getContext())
+                        .pedidoDao()
+                        .insertPedidos(PedidoMapper.toPedidoEntity(
+                                pedidosRecebidos.stream()
+                                        .filter(pedidoListagem ->
+                                                pedidosExistentes.stream()
+                                                        .noneMatch(pedidoEntity ->
+                                                                pedidoEntity.getCodPedido() == pedidoListagem.getCodigoPedido()))
+                                        .collect(Collectors.toList())))
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(this::onSuccessInsertPedidos, this::onError));
+    }
+
     private void onSuccessInsertPedidos() {
+        getAllPedidosLocal();
+    }
+
+    private void getAllPedidosLocal() {
         mDisposable.add(
                 AppDatabase.getInstance(getContext())
                         .pedidoDao()
@@ -149,6 +179,7 @@ public class StatusPedidosFragment extends BaseFragment {
                         .map(PedidoMapper::toStatusPedidoListagem)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSubscribe(disposable -> showProgress(getBinding().progressBar))
                         .doFinally(this::hideProgresses)
                         .subscribe(this::recreateRecyclerViewItens, this::onError));
     }
